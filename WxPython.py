@@ -1,30 +1,25 @@
-import wx
-class MyFrame(wx.Frame):
+import tkinter as tk
+from tkinter import ttk
+
+class MyFrame(tk.Tk):
     def __init__(self):
-        wx.Frame.__init__(self, None,
-            pos=wx.DefaultPosition, size=wx.Size(450, 100),
-            style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION |
-             wx.CLOSE_BOX | wx.CLIP_CHILDREN,
-            title="PyDa")
-        panel = wx.Panel(self)
-        my_sizer = wx.BoxSizer(wx.VERTICAL)
-        lbl = wx.StaticText(panel,
-        label="Hello I am Pyda the Python Digital Assistant. How can I help you?")
-        my_sizer.Add(lbl, 0, wx.ALL, 5)
-        self.txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER,size=(400,30))
-        self.txt.SetFocus()
-        self.txt.Bind(wx.EVT_TEXT_ENTER, self.OnEnter)
-        my_sizer.Add(self.txt, 0, wx.ALL, 5)
-        panel.SetSizer(my_sizer)
-        self.Show()
+        super().__init__()
+        self.title("PyDa")
+        self.geometry("450x100")
+        
+        lbl = ttk.Label(self, text="Hello I am Pyda the Python Digital Assistant. How can I help you?")
+        lbl.pack(pady=5)
+        
+        self.txt = ttk.Entry(self, width=50)
+        self.txt.pack(pady=5)
+        self.txt.bind("<Return>", self.on_enter)
+        self.txt.focus_set()
 
-    def OnEnter(self, event):
-        input = self.txt.GetValue()
-        input = input.lower()
-
+    def on_enter(self, event):
+        input_text = self.txt.get()
+        input_text = input_text.lower()
 
 if __name__ == "__main__":
-    app = wx.App(True)
-    frame = MyFrame()
-    app.MainLoop()
+    app = MyFrame()
+    app.mainloop()
 
